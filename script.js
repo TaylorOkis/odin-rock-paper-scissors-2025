@@ -1,11 +1,13 @@
 function playGame() {
     let userSelection, computerSelection;
-    let userScore, computerScore;
+    let userScore = 0, computerScore = 0;
     let playOutcome;
 
     for (let i = 1; i <= 5; i++) {
         userSelection = getUserChoice();
         computerSelection = getComputerChoice();
+
+        console.log(`User Selection: ${userSelection}; Computer Selection: ${computerSelection}`);
 
         playOutcome = playRound(userSelection, computerSelection);
 
@@ -16,6 +18,8 @@ function playGame() {
         } else {
             continue;
         }
+
+        console.log(`User score: ${userScore}; Computer Score: ${computerScore}`)
     }
 
     if (userScore > computerScore) {
@@ -31,7 +35,7 @@ function playGame() {
 function playRound(userSelection, computerSelection) {
     if (userSelection === computerSelection) {
         return "tie";
-    } else if (userSelection === "rock" && userSelection === "scissors") {
+    } else if (userSelection === "rock" && computerSelection === "scissors") {
         return "user";
     } else if (userSelection === "paper" && computerSelection === "rock") {
         return "user";
@@ -52,7 +56,7 @@ function getUserChoice() {
     } else if (humanChoice === "scissors") {
         return "scissors";
     } else {
-        console.log("Invalid input. Input should be (rock, paper, or scissors)");
+        throw new Error("Invalid input. Input should be (rock, paper, or scissors)");
     }
 }
 
