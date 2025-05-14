@@ -1,38 +1,59 @@
-function playGame() {
-    let userSelection, computerSelection;
-    let userScore = 0, computerScore = 0;
-    let playOutcome;
 
-    for (let i = 1; i <= 5; i++) {
-        userSelection = getUserChoice();
-        computerSelection = getComputerChoice();
+let userSelection, computerSelection;
+let userScore = 0, computerScore = 0, round = 0;
+let playOutcome;
 
-        console.log(`User Selection: ${userSelection}; Computer Selection: ${computerSelection}`);
+function playRound(userSelection, computerSelection) {
 
-        playOutcome = playRound(userSelection, computerSelection);
+    round++;
+    let htmlGameRound = document.querySelector("#round");
+    htmlGameRound.textContent = round;
 
-        if (playOutcome === "user") {
-            userScore++;
-        } else if (playOutcome === "computer") {
-            computerScore++;
-        } else {
-            continue;
-        }
+    let htmlUserChoice = document.querySelector("#user-choice");
+    htmlUserChoice.textContent = userSelection;
 
-        console.log(`User score: ${userScore}; Computer Score: ${computerScore}`)
+    let htmlComputerChoice = document.querySelector("#computer-choice");
+    htmlComputerChoice.textContent = computerSelection;
+
+    playOutcome = decideRoundWinner(userSelection, computerSelection);
+
+    if (playOutcome === "user") {
+        userScore++;
+    } else if (playOutcome === "computer") {
+        computerScore++;
     }
 
+    let htmlUserScore = document.querySelector("#user-score");
+    htmlUserScore.textContent = userScore;
+
+    let htmlComputerScore = document.querySelector("#computer-score");
+    htmlComputerScore.textContent = computerScore;
+
+    if (userScore === 5 || computerScore === 5) {
+        declareGameWinner();
+
+        let choiceButtons = document.querySelectorAll(".choice-button");
+        choiceButtons.forEach((button) => {
+            button.disabled = true;
+        });
+    }
+}
+
+function declareGameWinner() {
+    let htmlMessageArea = document.querySelector(".main-container>p");
+
     if (userScore > computerScore) {
-        console.log("You win the game! Congratulations!!!");
+        htmlMessageArea.textContent = "You win the game! Congratulations!!!";
+        htmlMessageArea.style.color = "green";
     } else if (computerScore > userScore) {
-        console.log("Computer wins the game! Better luck next time.");
+        htmlMessageArea.textContent = "Computer wins the game! Better luck next time.";
+        htmlMessageArea.style.color = "red";
     } else {
         console.log("The game ends in a TIE!");
     }
 }
 
-
-function playRound(userSelection, computerSelection) {
+function decideRoundWinner(userSelection, computerSelection) {
     if (userSelection === computerSelection) {
         return "tie";
     } else if (userSelection === "rock" && computerSelection === "scissors") {
@@ -43,20 +64,6 @@ function playRound(userSelection, computerSelection) {
         return "user";
     } else {
         return "computer";
-    }
-}
-
-function getUserChoice() {
-    let humanChoice = prompt("Choose an option; rock, paper, or scissors: ").toLowerCase();
-
-    if (humanChoice === "rock") {
-        return "rock";
-    } else if (humanChoice === "paper") {
-        return "paper";
-    } else if (humanChoice === "scissors") {
-        return "scissors";
-    } else {
-        throw new Error("Invalid input. Input should be (rock, paper, or scissors)");
     }
 }
 
@@ -71,3 +78,50 @@ function getComputerChoice() {
         return "scissors";
     }
 }
+
+
+function resetGame() {
+    let htmlGameRound = document.querySelector("#round");
+    htmlGameRound.textContent = 0;
+    round = 0;
+
+    let htmlUserScore = document.querySelector("#user-score");
+    htmlUserScore.textContent = 0;
+    userScore = 0;
+
+    let htmlComputerScore = document.querySelector("#computer-score");
+    htmlComputerScore.textContent = 0;
+    computerScore = 0;
+
+    let htmlUserChoice = document.querySelector("#user-choice");
+    htmlUserChoice.textContent = "-";
+
+    let htmlComputerChoice = document.querySelector("#computer-choice");
+    htmlComputerChoice.textContent = "-";
+
+    let htmlMessageArea = document.querySelector(".main-container>p");
+    htmlMessageArea.textContent = "Make your move!";
+    htmlMessageArea.style.color = "black";
+
+    let choiceButtons = document.querySelectorAll(".choice-button");
+    choiceButtons.forEach((button) => {
+        button.disabled = false;
+    });
+}
+
+const userBtn = document.querySelectorAll("button");
+userBtn.forEach((button) => {
+    button.addEventListener("click", (e) => {
+        let userChoice = e.target.id;
+
+        if (userChoice === "rock" || userChoice === "paper" || userChoice === "scissors") {
+            userSelection = userChoice;
+            computerSelection = getComputerChoice();
+            playRound(userSelection, computerSelection);
+        } else if (userChoice === "reset-game") {
+            resetGame();
+        } else {
+            console.log("Invalid event passed");
+        }
+    });
+});
