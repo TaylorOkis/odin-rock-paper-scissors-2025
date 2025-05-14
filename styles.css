@@ -30,7 +30,8 @@ body {
     font-size: 17px;
 }
 
-.choices>p {
+.choices>p,
+.main-container>p {
     font-size: 17px;
 }
 
@@ -39,14 +40,18 @@ body {
     font-size: 22px;
 }
 
+.buttons {
+    display: flex;
+}
+
 .choice-button {
     width: 66px;
     height: 66px;
     border-radius: 12px;
     border-color: #b4b5b6;
     border-width: 2.5px;
-    margin: 0 3.5px;
-    font-size: 25px;
+    margin: 8px 3.5px 0;
+    font-size: 32px;
 }
 
 .main-container>button {
