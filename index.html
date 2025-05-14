@@ -8,6 +8,27 @@
 </head>
 
 <body>
+    <div class="main-container">
+        <h1>Rock Paper Scissors</h1>
+        <div class="scoreboard">
+            <p class="round">Round: <span id="round">1</span></p>
+            <p class="user">You: <span id="user-score">0</span></p>
+            <p class="computer">Computer: <span id="computer-score">0</span></p>
+        </div>
+        <div class="buttons">
+            <button class="choice-button" data-choice="rock">✊</button>
+            <button class="choice-button" data-choice="paper">✋</button>
+            <button class="choice-button" data-choice="scissors">✌️</button>
+        </div>
+        <div class="choices">
+            <p>You chose: <span id="user-choice">-</span></p>
+            <p>Computer choise: <span id="computer-choice">-</span></p>
+        </div>
+
+        <p>Make you move!</p>
+
+        <button id="reset-game">Reset game</button>
+    </div>
     <script src="./script.js" type="text/javascript"></script>
 </body>
 
