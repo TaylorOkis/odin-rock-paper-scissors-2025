@@ -31,11 +31,11 @@ function playRound(userSelection, computerSelection) {
 
     if (userScore === 5 || computerScore === 5) {
         declareGameWinner();
-        // Deactivate choice buttons.
-        // This would not be here
-        userScore = 0;
-        computerScore = 0;
-        round = 0;
+
+        let choiceButtons = document.querySelectorAll(".choice-button");
+        choiceButtons.forEach((button) => {
+            button.disabled = true;
+        });
     }
 }
 
@@ -79,15 +79,46 @@ function getComputerChoice() {
     }
 }
 
+
+function resetGame() {
+    let htmlGameRound = document.querySelector("#round");
+    htmlGameRound.textContent = 0;
+
+    let htmlUserScore = document.querySelector("#user-score");
+    htmlUserScore.textContent = 0;
+
+    let htmlComputerScore = document.querySelector("#computer-score");
+    htmlComputerScore.textContent = 0;
+
+    let htmlUserChoice = document.querySelector("#user-choice");
+    htmlUserChoice.textContent = "-";
+
+    let htmlComputerChoice = document.querySelector("#computer-choice");
+    htmlComputerChoice.textContent = "-";
+
+    let htmlMessageArea = document.querySelector(".main-container>p");
+    htmlMessageArea.textContent = "Make your move!";
+    htmlMessageArea.style.color = "black";
+
+    let choiceButtons = document.querySelectorAll(".choice-button");
+    choiceButtons.forEach((button) => {
+        button.disabled = false;
+    });
+}
+
 const userBtn = document.querySelectorAll("button");
 userBtn.forEach((button) => {
-    button.addEventListener("click", () => {
-        let userChoice = button.id;
+    button.addEventListener("click", (e) => {
+        let userChoice = e.target.id;
 
         if (userChoice === "rock" || userChoice === "paper" || userChoice === "scissors") {
             userSelection = userChoice;
             computerSelection = getComputerChoice();
             playRound(userSelection, computerSelection);
+        } else if (userChoice === "reset-game") {
+            resetGame();
+        } else {
+            console.log("Invalid event passed");
         }
     });
 });
