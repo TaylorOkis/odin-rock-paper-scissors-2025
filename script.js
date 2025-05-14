@@ -1,27 +1,33 @@
-function playGame() {
-    let userSelection, computerSelection;
-    let userScore = 0, computerScore = 0;
-    let playOutcome;
 
-    for (let i = 1; i <= 5; i++) {
-        userSelection = getUserChoice();
-        computerSelection = getComputerChoice();
+let userSelection, computerSelection;
+let userScore = 0, computerScore = 0;
+let playOutcome;
 
-        console.log(`User Selection: ${userSelection}; Computer Selection: ${computerSelection}`);
+function playRound(userSelection, computerSelection) {
 
-        playOutcome = playRound(userSelection, computerSelection);
+    console.log(`User Selection: ${userSelection}; Computer Selection: ${computerSelection}`);
 
-        if (playOutcome === "user") {
-            userScore++;
-        } else if (playOutcome === "computer") {
-            computerScore++;
-        } else {
-            continue;
-        }
+    playOutcome = decideRoundWinner(userSelection, computerSelection);
 
-        console.log(`User score: ${userScore}; Computer Score: ${computerScore}`)
+
+    if (playOutcome === "user") {
+        userScore++;
+    } else if (playOutcome === "computer") {
+        computerScore++;
     }
 
+    console.log(`User score: ${userScore}; Computer Score: ${computerScore}`);
+
+    if (userScore === 5 || computerScore === 5) {
+        declareGameWinner();
+        // Deactivate choice buttons.
+        // This would not be here
+        userScore = 0;
+        computerScore = 0;
+    }
+}
+
+function declareGameWinner() {
     if (userScore > computerScore) {
         console.log("You win the game! Congratulations!!!");
     } else if (computerScore > userScore) {
@@ -31,8 +37,7 @@ function playGame() {
     }
 }
 
-
-function playRound(userSelection, computerSelection) {
+function decideRoundWinner(userSelection, computerSelection) {
     if (userSelection === computerSelection) {
         return "tie";
     } else if (userSelection === "rock" && computerSelection === "scissors") {
@@ -47,13 +52,14 @@ function playRound(userSelection, computerSelection) {
 }
 
 function getUserChoice() {
-    let humanChoice = prompt("Choose an option; rock, paper, or scissors: ").toLowerCase();
 
-    if (humanChoice === "rock") {
+    let userChoice = "";
+
+    if (userChoice === "rock") {
         return "rock";
-    } else if (humanChoice === "paper") {
+    } else if (userChoice === "paper") {
         return "paper";
-    } else if (humanChoice === "scissors") {
+    } else if (userChoice === "scissors") {
         return "scissors";
     } else {
         throw new Error("Invalid input. Input should be (rock, paper, or scissors)");
@@ -71,3 +77,16 @@ function getComputerChoice() {
         return "scissors";
     }
 }
+
+const userBtn = document.querySelectorAll("button");
+userBtn.forEach((button) => {
+    button.addEventListener("click", () => {
+        let userChoice = button.id;
+
+        if (userChoice === "rock" || userChoice === "paper" || userChoice === "scissors") {
+            userSelection = userChoice;
+            computerSelection = getComputerChoice();
+            playRound(userSelection, computerSelection);
+        }
+    });
+});
