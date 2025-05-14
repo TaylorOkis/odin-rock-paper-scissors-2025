@@ -1,0 +1,59 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #ebedee;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.main-container {
+    background-color: white;
+    padding: 36px;
+    box-shadow: 0 0 25px 5px rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+}
+
+.scoreboard>p {
+    font-weight: 600;
+    font-size: 17px;
+}
+
+.choices>p {
+    font-size: 17px;
+}
+
+.main-container>p {
+    font-weight: 600;
+    font-size: 22px;
+}
+
+.choice-button {
+    width: 66px;
+    height: 66px;
+    border-radius: 12px;
+    border-color: #b4b5b6;
+    border-width: 2.5px;
+    margin: 0 3.5px;
+    font-size: 25px;
+}
+
+.main-container>button {
+    background-color: #B10909;
+    border-color: #d0393c;
+    border-radius: 8px;
+    padding: 10px 20px;
+    color: white;
+    font-size: 16px;
+}
