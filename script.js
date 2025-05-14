@@ -83,12 +83,15 @@ function getComputerChoice() {
 function resetGame() {
     let htmlGameRound = document.querySelector("#round");
     htmlGameRound.textContent = 0;
+    round = 0;
 
     let htmlUserScore = document.querySelector("#user-score");
     htmlUserScore.textContent = 0;
+    userScore = 0;
 
     let htmlComputerScore = document.querySelector("#computer-score");
     htmlComputerScore.textContent = 0;
+    computerScore = 0;
 
     let htmlUserChoice = document.querySelector("#user-choice");
     htmlUserChoice.textContent = "-";
