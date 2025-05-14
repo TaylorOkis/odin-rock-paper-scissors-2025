@@ -1,14 +1,21 @@
 
 let userSelection, computerSelection;
-let userScore = 0, computerScore = 0;
+let userScore = 0, computerScore = 0, round = 0;
 let playOutcome;
 
 function playRound(userSelection, computerSelection) {
 
-    console.log(`User Selection: ${userSelection}; Computer Selection: ${computerSelection}`);
+    round++;
+    let htmlGameRound = document.querySelector("#round");
+    htmlGameRound.textContent = round;
+
+    let htmlUserChoice = document.querySelector("#user-choice");
+    htmlUserChoice.textContent = userSelection;
+
+    let htmlComputerChoice = document.querySelector("#computer-choice");
+    htmlComputerChoice.textContent = computerSelection;
 
     playOutcome = decideRoundWinner(userSelection, computerSelection);
-
 
     if (playOutcome === "user") {
         userScore++;
@@ -16,7 +23,11 @@ function playRound(userSelection, computerSelection) {
         computerScore++;
     }
 
-    console.log(`User score: ${userScore}; Computer Score: ${computerScore}`);
+    let htmlUserScore = document.querySelector("#user-score");
+    htmlUserScore.textContent = userScore;
+
+    let htmlComputerScore = document.querySelector("#computer-score");
+    htmlComputerScore.textContent = computerScore;
 
     if (userScore === 5 || computerScore === 5) {
         declareGameWinner();
@@ -24,14 +35,19 @@ function playRound(userSelection, computerSelection) {
         // This would not be here
         userScore = 0;
         computerScore = 0;
+        round = 0;
     }
 }
 
 function declareGameWinner() {
+    let htmlMessageArea = document.querySelector(".main-container>p");
+
     if (userScore > computerScore) {
-        console.log("You win the game! Congratulations!!!");
+        htmlMessageArea.textContent = "You win the game! Congratulations!!!";
+        htmlMessageArea.style.color = "green";
     } else if (computerScore > userScore) {
-        console.log("Computer wins the game! Better luck next time.");
+        htmlMessageArea.textContent = "Computer wins the game! Better luck next time.";
+        htmlMessageArea.style.color = "red";
     } else {
         console.log("The game ends in a TIE!");
     }
@@ -48,21 +64,6 @@ function decideRoundWinner(userSelection, computerSelection) {
         return "user";
     } else {
         return "computer";
-    }
-}
-
-function getUserChoice() {
-
-    let userChoice = "";
-
-    if (userChoice === "rock") {
-        return "rock";
-    } else if (userChoice === "paper") {
-        return "paper";
-    } else if (userChoice === "scissors") {
-        return "scissors";
-    } else {
-        throw new Error("Invalid input. Input should be (rock, paper, or scissors)");
     }
 }
 
